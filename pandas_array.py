@@ -7,17 +7,16 @@ Created on Tue Dec 31 15:13:59 2024
 
 import pandas as pd
 
-puzzle = pd.read_csv('C:/Users/alexg/Documents/Python Scripts/Mayan_Puzzle/Mayan_Puzzle/Calendar_Puzzle/Mayan Puzzle - Data with no placeholders.csv', names=['A','B','C','D','E','F','G','H','I','J','K','L'])
+solved = False
+row = 0
+column = 0
+
+# puzzle = pd.read_csv('C:/Users/alexg/Documents/Python Scripts/Mayan_Puzzle/Mayan_Puzzle/Calendar_Puzzle/Mayan Puzzle - Data with no placeholders.csv', names=['A','B','C','D','E','F','G','H','I','J','K','L'])
 # puzzle = pd.read_csv('C:/Users/alexg/Documents/Python Scripts/Mayan_Puzzle/Mayan_Puzzle/Calendar_Puzzle/Mayan Puzzle - Data with no placeholders.csv', names=['A','B','C','D','E','F','G','H','I','J','K','L'])
 
-print(puzzle)
 # print(puzzle)
 
-layer5 = puzzle.iloc[16:20]
-layer4 = puzzle.iloc[12:16]
-layer3 = puzzle.iloc[8:12]
-layer2 = puzzle.iloc[4:8]
-layer1 = puzzle.iloc[0:4]
+
 # layer5 = puzzle.iloc[16:20]
 # layer4 = puzzle.iloc[12:16]
 # layer3 = puzzle.iloc[8:12]
@@ -50,3 +49,15 @@ print('')
 print(layer1)
 print('')
 
+print(layer1.iat[0,1])
+
+def stack():
+    cell1 = layer1.iat[row,column]
+    cell1 = (
+        if layer2.iat[row,column] != NaN
+            layer2.iat[row,column]
+        else layer1.iat[row,column])
+    
+
+while solved != False:
+    
