@@ -7,55 +7,19 @@ Created on Tue Dec 31 15:13:59 2024
 
 import pandas as pd
 
-solved = False
-column1 = 0
-column2 = 0
-column3 = 0
-column4 = 0
-column5 = 0
-activecolumn1 = 0
-activecolumn2 = 0
-activecolumn3 = 0
-activecolumn4 = 0
-activecolumn5 = 0
-cell1 = 0
-cell2 = 0
-cell3 = 0
-cell4 = 0
+#############################################################################################################
+# These variables provide the location of the specific rows from the CSV data for each layer of the puzzle. #
+#############################################################################################################
 
-pass1 = [0,0,0,0]
-pass2 = [0,0,0,0]
-pass3 = [0,0,0,0]
-pass4 = [0,0,0,0]
-pass5 = [0,0,0,0]
-pass6 = [0,0,0,0]
-pass7 = [0,0,0,0]
-pass8 = [0,0,0,0]
-pass9 = [0,0,0,0]
-pass10 = [0,0,0,0]
-pass11 = [0,0,0,0]
-pass12 = [0,0,0,0]
+layer5rows = [16,17,18,19,20] # Top layer
+layer4rows = [12,13,14,15] # Second layer from the top
+layer3rows = [8,9,10,11] # Third layer from the top
+layer2rows = [4,5,6,7] # Fourth layer from the top
+layer1rows = [0,1,2,3] # Base layer
 
-passcount = 0
-
-
-# puzzle = pd.read_csv('C:/Users/alexg/Documents/Python Scripts/Mayan_Puzzle/Mayan_Puzzle/Calendar_Puzzle/Mayan Puzzle - Data with no placeholders.csv', names=['A','B','C','D','E','F','G','H','I','J','K','L'])
-# puzzle = pd.read_csv('C:/Users/alexg/Documents/Python Scripts/Mayan_Puzzle/Mayan_Puzzle/Calendar_Puzzle/Mayan Puzzle - Data with no placeholders.csv', names=['A','B','C','D','E','F','G','H','I','J','K','L'])
-
-# print(puzzle)
-
-
-# layer5 = puzzle.iloc[16:20]
-# layer4 = puzzle.iloc[12:16]
-# layer3 = puzzle.iloc[8:12]
-# layer2 = puzzle.iloc[4:8]
-# layer1 = puzzle.iloc[0:4]
-layer5rows = [16,17,18,19,20]
-layer4rows = [12,13,14,15]
-layer3rows = [8,9,10,11]
-layer2rows = [4,5,6,7]
-layer1rows = [0,1,2,3]
-
+#######################################################################
+# These variables create a pandas table for each layer of the puzzle. #
+#######################################################################
 
 layer5 = pd.read_csv(r'C:\Users\alexg\Documents\Python Scripts\Mayan_Puzzle\Mayan_Puzzle\Calendar_Puzzle\Mayan Puzzle - Data with placeholder zeroes.csv', names=['A','B','C','D','E','F','G','H','I','J','K','L'], skiprows = lambda x: x not in layer5rows)
 print("Layer 5:")
@@ -78,6 +42,62 @@ print("Layer 1:")
 print(layer1)
 print("")
 
+
+solved = False # The puzzle has not been solved
+
+####################################################################################
+# These variables are the current index position of the puzzle.                    # 
+# Used in the index functions to rotate the puzzle in sequence as iterations fail. #
+####################################################################################
+
+column5 = 0 # Top layer current index position
+column4 = 0 # Second layer from the top index position
+column3 = 0 # Third layer from the top index position
+column2 = 0 # Fourth layer from the top index position
+column1 = 0 # Base layer index position
+
+#################################################################################################################
+# These variables call the cells that are actively being added together to solve the puzzle.                    #
+# As each pass variable adds up to 42, these will all index one ahead and then the next pass variable will add. #
+# They are all reset back to the value of their corresponding "columnx" value upon a failed check.              #
+#################################################################################################################
+
+activecolumn5 = 0 # Top layer current active index position for verification
+activecolumn4 = 0 # Second layer from the top current active index position for verification
+activecolumn3 = 0 # Third layer from the top current active index position for verification
+activecolumn2 = 0 # Fourth layer from the top current active index position for verification
+activecolumn1 = 0 # Base layer current active index position for verification
+
+################################################################################################
+# These variables are the active cells that are being verified for each position on the puzzle #
+################################################################################################
+
+cell1 = 0 # Active cell on the innermost ring for the column being checked
+cell2 = 0 # Active cell on the second ring from the center for the column being checked
+cell3 = 0 # Active cell for the third ring from the center for the column being checked
+cell4 = 0 # Active cell for the outermost ring for the column being checked
+
+##############################################################################################
+# These variables are the record of each column that successfully adds up to 42              #
+# They are the key provided upon successful puzzle completion to solving the physical puzzle #
+##############################################################################################
+
+pass1 = [0,0,0,0]
+pass2 = [0,0,0,0]
+pass3 = [0,0,0,0]
+pass4 = [0,0,0,0]
+pass5 = [0,0,0,0]
+pass6 = [0,0,0,0]
+pass7 = [0,0,0,0]
+pass8 = [0,0,0,0]
+pass9 = [0,0,0,0]
+pass10 = [0,0,0,0]
+pass11 = [0,0,0,0]
+pass12 = [0,0,0,0]
+
+
+passcount = 0 # Record of how many columns add up to 42 on the current iteration. Reset to 0 on a fail
+attempts = 0 # Record of total iterations required to solve the puzzle from the data set provided
 
 ################################################################################################
 # This section takes the active column in each row and stacks the values on top of each other. #
@@ -197,6 +217,11 @@ def index1(): # Rotate the bottom layer one position as layer 2 indexes back to 
         column1 = 0
         print("Analysis failed")
         
+###############################################################################################################
+# This function indexes the active working cells for each layer by 1 every time the total for a column is 42. #
+# The active column rolls over to 0 after column 11 since the puzzle is a ring                                #
+###############################################################################################################
+
 def nextcolumn():
     
     global activecolumn1
@@ -205,39 +230,38 @@ def nextcolumn():
     global activecolumn4
     global activecolumn5
     
-    if (activecolumn1 < 11):
+    if (activecolumn1 < 11): # Base layer
         activecolumn1 = (activecolumn1 + 1)
     else:
         activecolumn1 = 0
         
-    if (activecolumn2 < 11):
+    if (activecolumn2 < 11): # Fourth layer from the top
         activecolumn2 = (activecolumn2 + 1)
     else:
         activecolumn2 = 0
 
-    if (activecolumn3 < 11):
+    if (activecolumn3 < 11): # Third layer from the top
         activecolumn3 = (activecolumn3 + 1)
     else:
         activecolumn3 = 0
 
-    if (activecolumn4 < 11):
+    if (activecolumn4 < 11): # Second layer from the top
         activecolumn4 = (activecolumn4 + 1)
     else:
         activecolumn4 = 0
 
-    if (activecolumn5 < 11):
+    if (activecolumn5 < 11): # Top layer
         activecolumn5 = (activecolumn5 + 1)
     else:
         activecolumn5 = 0
 
     
-# stack()
-# print(cell1)
-# print(cell2)
-# print(cell3)
-# print(cell4)
-
-    
+############################################################################################################
+# This function checks that each column adds up to 42.                                                     #
+# On success of one column, nextcolumn() is called to index forward and then it checks again.              #
+# The process repeats until either all columns equal 42, or there is a failure.                            #
+# If a column fails to add up to 42, activecolumnx is reset to columnx and the puzzle indexes forward one. #
+############################################################################################################
     
 def checkresult():
     
@@ -310,40 +334,56 @@ def checkresult():
         elif (passcount == 12):
             pass12 = [cell1,cell2,cell3,cell4]
             solved = True
+            print("")
             print("Puzzle Solved!")
+            print("")
+            print("It took ", attempts, "iterations to solve this puzzle.")
+            print("")
             print("Column A")
             print(pass1)
+            print("")
             print("Column B")
             print(pass2)
+            print("")
             print("Column C")
             print(pass3)
+            print("")
             print("Column D")
             print(pass4)
+            print("")
             print("Column E")
             print(pass5)
+            print("")
             print("Column F")
             print(pass6)
+            print("")
             print("Column G")
             print(pass7)
+            print("")
             print("Column H")
             print(pass8)
+            print("")
             print("Column I")
             print(pass9)
+            print("")
             print("Column J")
             print(pass10)
+            print("")
             print("Column K")
             print(pass11)
+            print("")
             print("Column L")
             print(pass12)
-            print("Bottom Layer")
+            print("")
+            print("Bottom layer index:")
             print(column1)
-            print("Second Layer")
+            print("Second layer index:")
             print(column2)
-            print("Third Layer")
+            print("Third layer index:")
             print(column3)
-            print("Fourth Layer")
+            print("Fourth layer index:")
             print(column4)
-            print("Fifth Layer")
+            print("Fifth layer index:")
             print(column5)
             
             
@@ -357,10 +397,16 @@ def checkresult():
         activecolumn2 = column2
         activecolumn1 = column1
         
+#####################################################################################
+# This is the active code that calls all other functions of the program.            # 
+# It runs in a loop until the puzzle is solved with all 12 columns adding up to 42. #
+#####################################################################################
         
-while solved == False:
+while solved == False: 
 
     stack()
+    attempts = (attempts + 1)
     print("Stacking")
     checkresult()
+
     
