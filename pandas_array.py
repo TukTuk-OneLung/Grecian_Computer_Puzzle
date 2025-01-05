@@ -274,29 +274,39 @@ def checkresult():
     if (cell1 + cell2 + cell3 + cell4) == 42:
         passcount = (passcount + 1)
         print("Passed ", passcount, " out of 12.")
-        nextcolumn()
         if (passcount == 1):
             pass1 = [cell1,cell2,cell3,cell4]
+            nextcolumn()
         elif (passcount == 2):
             pass2 = [cell1,cell2,cell3,cell4]
+            nextcolumn()
         elif (passcount == 3):
             pass3 = [cell1,cell2,cell3,cell4]
+            nextcolumn()
         elif (passcount == 4):
             pass4 = [cell1,cell2,cell3,cell4]
+            nextcolumn()
         elif (passcount == 5):
             pass5 = [cell1,cell2,cell3,cell4]
+            nextcolumn()
         elif (passcount == 6):
             pass6 = [cell1,cell2,cell3,cell4]
+            nextcolumn()
         elif (passcount == 7):
             pass7 = [cell1,cell2,cell3,cell4]
+            nextcolumn()
         elif (passcount == 8):
             pass8 = [cell1,cell2,cell3,cell4]
+            nextcolumn()
         elif (passcount == 9):
             pass9 = [cell1,cell2,cell3,cell4]
+            nextcolumn()
         elif (passcount == 10):
             pass10 = [cell1,cell2,cell3,cell4]
+            nextcolumn()
         elif (passcount == 11):
             pass11 = [cell1,cell2,cell3,cell4]
+            nextcolumn()
         elif (passcount == 12):
             pass12 = [cell1,cell2,cell3,cell4]
             solved = True
@@ -339,6 +349,7 @@ def checkresult():
             
     else:
         print("No match. Indexing...")
+        passcount = 0
         index5()
         activecolumn5 = column5
         activecolumn4 = column4
@@ -352,5 +363,4 @@ while solved == False:
     stack()
     print("Stacking")
     checkresult()
-    print("Checking")
     
