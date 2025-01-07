@@ -2,7 +2,7 @@
 """
 Created on Tue Dec 31 15:13:59 2024
 
-@author: ageffre
+@author: Orchestrator
 """
 
 import pandas as pd
@@ -259,7 +259,7 @@ def nextcolumn():
 ############################################################################################################
 # This function checks that each column adds up to 42.                                                     #
 # On success of one column, nextcolumn() is called to index forward and then it checks again.              #
-# The process repeats until either all columns equal 42, or there is a failure.                            #
+# The process repeats until either all 12 columns equal 42, or there is a failure.                         #
 # If a column fails to add up to 42, activecolumnx is reset to columnx and the puzzle indexes forward one. #
 ############################################################################################################
     
@@ -331,7 +331,7 @@ def checkresult():
         elif (passcount == 11):
             pass11 = [cell1,cell2,cell3,cell4]
             nextcolumn()
-        elif (passcount == 12):
+        elif (passcount == 12): # Each passed list gets printed once the puzzle is solved.  This is the key to the puzzle solution.
             pass12 = [cell1,cell2,cell3,cell4]
             solved = True
             print("")
@@ -375,7 +375,7 @@ def checkresult():
             print("Column L")
             print(pass12)
             print("")
-            print("Bottom layer index:")
+            print("Bottom layer index:") # For now, the index position of each layer is also printed to assist with lining up the puzzle.
             print(column1)
             print("Second layer index:")
             print(column2)
